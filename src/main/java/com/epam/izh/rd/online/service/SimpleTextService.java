@@ -16,7 +16,10 @@ public class SimpleTextService implements TextService {
      */
     @Override
     public String removeString(String base, String remove) {
-        return null; //TODO
+        Pattern pattern = Pattern.compile(remove);
+        Matcher matcher = pattern.matcher(base);
+
+        return matcher.replaceAll("");
     }
 
     /**
