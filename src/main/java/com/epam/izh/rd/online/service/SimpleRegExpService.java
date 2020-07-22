@@ -45,6 +45,24 @@ public class SimpleRegExpService implements RegExpService {
      */
     @Override
     public String replacePlaceholders(double paymentAmount, double balance) {
-        return null;
+        String buffer = "";
+        try {
+            String basePath = new File("").getAbsolutePath();
+            Scanner sc = new Scanner(new File(
+                    basePath + "\\src\\main\\resources\\sensitive_data.txt"));
+            buffer = sc.nextLine();
+
+        } catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+        Pattern pattern = Pattern.compile("\\$\\{payment_amount}");
+        Matcher matcher = pattern.matcher(buffer);
+
+        buffer = matcher.replaceAll("" + (int) paymentAmount);
+
+        pattern = Pattern.compile("\\$\\{balance}");
+        matcher = pattern.matcher(buffer);
+
+        return matcher.replaceAll("" + (int) balance);
     }
 }
