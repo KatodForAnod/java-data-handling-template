@@ -1,5 +1,8 @@
 package com.epam.izh.rd.online.service;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class SimpleTextService implements TextService {
 
     /**
@@ -13,7 +16,10 @@ public class SimpleTextService implements TextService {
      */
     @Override
     public String removeString(String base, String remove) {
-        return null; //TODO
+        Pattern pattern = Pattern.compile(remove);
+        Matcher matcher = pattern.matcher(base);
+
+        return matcher.replaceAll("");
     }
 
     /**
@@ -24,7 +30,10 @@ public class SimpleTextService implements TextService {
      */
     @Override
     public boolean isQuestionString(String text) {
-        return false; //TODO
+        Pattern pattern = Pattern.compile("\\?$");
+        Matcher matcher = pattern.matcher(text);
+
+        return matcher.find();
     }
 
     /**
@@ -35,7 +44,12 @@ public class SimpleTextService implements TextService {
      */
     @Override
     public String concatenate(String... elements) {
-        return null; //TODO
+        StringBuilder string = new StringBuilder();
+        for (String s : elements) {
+            string.append(s);
+        }
+
+        return string.toString();
     }
 
     /**
