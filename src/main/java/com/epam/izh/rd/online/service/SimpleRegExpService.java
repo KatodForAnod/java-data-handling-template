@@ -1,5 +1,12 @@
 package com.epam.izh.rd.online.service;
 
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class SimpleRegExpService implements RegExpService {
 
     /**
@@ -11,7 +18,23 @@ public class SimpleRegExpService implements RegExpService {
      */
     @Override
     public String maskSensitiveData() {
-        return null;
+        String strings = "";
+        try {
+            String basePath = new File("").getAbsolutePath();
+
+            Scanner sc = new Scanner(new File(
+                    basePath + "\\src\\main\\resources\\sensitive_data.txt"));
+
+            strings = sc.nextLine();
+
+        } catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+
+        Pattern pattern = Pattern.compile("(?<=\\d\\s)(\\d{4} \\d{4})(?=\\s\\d)");
+        Matcher matcher = pattern.matcher(strings);
+
+        return matcher.replaceAll("**** ****");
     }
 
     /**
